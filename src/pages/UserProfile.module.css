@@ -1,0 +1,75 @@
+.userprofilecontainer {
+  border: 1px solid gray;
+  width: 60vw;
+  height: 50vh;
+  margin: auto;
+  background-size: cover;
+  color: red;
+}
+
+.bgphotoicon {
+  width: 6vw;
+  margin-left: auto;
+}
+
+.profilepiccontainer {
+  position: relative;
+  left: 5%;
+  top: -10%;
+  border-radius: 50%;
+  width: 8vw;
+  height: 15vh;
+  z-index: 1;
+  text-align: center;
+  background-size: cover;
+}
+
+.bgpiccontainer {
+  height: 100%;
+  width: 100%;
+}
+
+.profilepic {
+  position: relative;
+  border-radius: 50%;
+  width: 8vw;
+  height: 15vh;
+  border: 1px solid gray;
+  z-index: 1;
+  text-align: center;
+  background-size: cover;
+}
+
+.bgpic {
+  height: 100%;
+  width: 100%;
+}
+
+.profilefile {
+  position: relative;
+  top: -35px;
+  left: 50px;
+  height: 5px;
+  width: 12px;
+  background-color: black;
+  z-index: 2;
+}
+
+.bgfile {
+  position: relative;
+  background-color: black;
+  left: 58vw;
+  top: -2vh;
+  height: 5px;
+  width: 12px;
+  z-index: 2;
+}
+
+.infocontainer {
+  position: relative;
+  top: -25%;
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+  margin-left: auto;
+}

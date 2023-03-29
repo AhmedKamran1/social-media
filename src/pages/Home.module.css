@@ -1,0 +1,13 @@
+.userprofile{
+    margin-left: auto;
+    width: 10%;
+    text-align: center;
+    border: 1px solid black;
+    color: red;
+}
+
+.userprofile:hover{
+    background-color: black;
+    color: white;
+    transition: all 0.2s;
+}

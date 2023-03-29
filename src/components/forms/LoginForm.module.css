@@ -1,0 +1,26 @@
+input,
+select {
+  width: 10%;
+  padding: 0.65rem 0.5rem;
+  font-size: 1rem;
+  color: black;
+  border: 1px solid #4a5568;
+  border-radius: 10px;
+  outline: none;
+}
+
+input:focus,
+select:focus {
+  border-color: #4299e1;
+}
+
+.error{
+    border: 1px solid red
+}
+
+/* .input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid blue;
+} */
