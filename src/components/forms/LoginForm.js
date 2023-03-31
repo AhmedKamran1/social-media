@@ -1,5 +1,5 @@
 import { useFormik } from "formik";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import validationSchema from "../../utils/validationSchema";
 import classes from "./LoginForm.module.css";
 import { authActions } from "../../store/authSlice";
@@ -18,7 +18,7 @@ const LoginForm = () => {
       })
     );
     actions.resetForm();
-    navigate("/home");
+    navigate("/");
   };
 
   const formik = useFormik({
