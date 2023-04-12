@@ -48,9 +48,9 @@ const SignupForm = () => {
               : classes.input
           }
         />
-        {formik.errors.email && formik.touched.email ? (
+        {formik.errors.email && formik.touched.email && (
           <p>{formik.errors.email}</p>
-        ) : null}
+        )}
         <br />
         <label htmlFor="password">Password</label>
         <input
@@ -66,9 +66,9 @@ const SignupForm = () => {
               : classes.input
           }
         />
-        {formik.errors.password && formik.touched.password ? (
+        {formik.errors.password && formik.touched.password && (
           <p>{formik.errors.password}</p>
-        ) : null}
+        )}
         <button type="submit">
           {formik.isSubmitting ? "submitting form" : "submit"}
         </button>
