@@ -1,8 +1,20 @@
 import { useFormik } from "formik";
 import { useDispatch } from "react-redux";
-import validationSchema from "../../utils/validationSchema";
-import classes from "./LoginForm.module.css";
+import { signupSchema } from "../../utils/validationSchema";
 import { authActions } from "../../store/authSlice";
+import signupImage from "../../assets/signup-image.svg";
+import {
+  Container,
+  Button,
+  Form,
+  Label,
+  Input,
+  FormContainer,
+  HeadingContainer,
+  SignupImage,
+  StyledLink,
+  InputContainer,
+} from "./Signup.styles";
 
 const SignupForm = () => {
   const dispatch = useDispatch();
@@ -24,56 +36,77 @@ const SignupForm = () => {
     initialValues: {
       email: "",
       password: "",
+      confirmPassword: "",
     },
-    validationSchema: validationSchema,
+    validationSchema: signupSchema,
     onSubmit: submitHandler,
   });
 
   return (
-    <>
-      <h1>Sign Up</h1>
-
-      <form autoComplete="off" onSubmit={formik.handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          id="email"
-          type="email"
-          placeholder="Enter your email"
-          className={
-            formik.errors.email && formik.touched.email
-              ? classes.error
-              : classes.input
-          }
-        />
-        {formik.errors.email && formik.touched.email && (
-          <p>{formik.errors.email}</p>
-        )}
-        <br />
-        <label htmlFor="password">Password</label>
-        <input
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          id="password"
-          type="password"
-          placeholder="Enter your password"
-          className={
-            formik.errors.password && formik.touched.email
-              ? classes.error
-              : classes.input
-          }
-        />
-        {formik.errors.password && formik.touched.password && (
-          <p>{formik.errors.password}</p>
-        )}
-        <button type="submit">
-          {formik.isSubmitting ? "submitting form" : "submit"}
-        </button>
-      </form>
-    </>
+    <Container>
+      <FormContainer>
+        <HeadingContainer>
+          <h1>Sign Up</h1>
+        </HeadingContainer>
+        <Form autoComplete="off" onSubmit={formik.handleSubmit}>
+          <Label htmlFor="email">Email</Label>
+          <InputContainer>
+            <Input
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              error={formik.errors.email && formik.touched.email}
+            />
+            {formik.errors.email && formik.touched.email && (
+              <p>{formik.errors.email}</p>
+            )}
+          </InputContainer>
+          <Label htmlFor="password">Password</Label>
+          <InputContainer>
+            <Input
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              error={formik.errors.password && formik.touched.password}
+            />
+            {formik.errors.password && formik.touched.password && (
+              <p>{formik.errors.password}</p>
+            )}
+          </InputContainer>
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <InputContainer>
+            <Input
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              error={
+                formik.errors.confirmPassword && formik.touched.confirmPassword
+              }
+            />
+            {formik.errors.confirmPassword &&
+              formik.touched.confirmPassword && (
+                <p>{formik.errors.confirmPassword}</p>
+              )}
+          </InputContainer>
+          <Button type="submit" disabled={formik.isSubmitting}>
+            {formik.isSubmitting ? "Signing Up...." : "Sign Up"}
+          </Button>
+        </Form>
+      </FormContainer>
+      <SignupImage>
+        <img src={signupImage} />
+        <StyledLink to="/login">I am already a member</StyledLink>
+      </SignupImage>
+    </Container>
   );
 };
 
