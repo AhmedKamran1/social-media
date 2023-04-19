@@ -8,6 +8,9 @@ import { authActions } from "../store/authSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+// Break in components
+// ulti seedhi webpage pe direct krne pe  error throw  na kare
+
 const users = JSON.parse(localStorage.getItem("users"));
 
 const UserProfile = () => {
