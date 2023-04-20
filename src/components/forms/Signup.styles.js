@@ -15,6 +15,21 @@ export const Container = styled.div`
   transform: translate(-50%, -50%);
   border-radius: 10px;
   box-shadow: 2px 2px 15px 2px rgba(0, 0, 0, 0.2);
+
+  @media only screen and (max-width: 992px) {
+    height: 80%;
+    width: 70%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    height: 80%;
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 300px) {
+    height: 70%;
+    width: 90%;
+  }
 `;
 
 export const FormContainer = styled.div`
@@ -22,6 +37,19 @@ export const FormContainer = styled.div`
   flex-direction: column;
   width: 50%;
   padding: 4em;
+
+  @media only screen and (max-width: 992px) {
+    height: 100%;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 2em;
+  }
+
+  @media only screen and (max-width: 300px) {
+    padding: 1em;
+  }
 `;
 
 export const SignupImage = styled.div`
@@ -33,6 +61,22 @@ export const SignupImage = styled.div`
   & img {
     height: 100%;
     width: 100%;
+  }
+
+  @media only screen and (max-width: 992px) {
+    display: block;
+    width: 0;
+
+    & img {
+      display: none;
+    }
+
+    & a {
+      position: absolute;
+      top: 85%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 `;
 
@@ -46,6 +90,10 @@ export const HeadingContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   width: 100%;
+
+  @media only screen and (max-width: 992px) {
+    justify-content: center;
+  }
 `;
 
 export const Form = styled.form`
@@ -56,6 +104,10 @@ export const Form = styled.form`
   align-items: flex-start;
   margin-bottom: 5em;
   gap: 0.5em;
+
+  @media only screen and (max-width: 992px) {
+    justify-content: center;
+  }
 `;
 
 export const Label = styled.label`
@@ -95,5 +147,9 @@ export const Button = styled.button`
   &:hover {
     background-color: blue;
     transition: all 0.35s;
+  }
+
+  @media only screen and (max-width: 992px) {
+    margin: 1.5em auto;
   }
 `;
