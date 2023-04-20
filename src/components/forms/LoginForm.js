@@ -15,6 +15,7 @@ import {
   LoginImage,
   StyledLink,
   Container,
+  Paragraph,
 } from "./LoginForm.styles";
 
 const LoginForm = () => {
@@ -46,7 +47,7 @@ const LoginForm = () => {
     <Container>
       <LoginImage>
         <img src={loginImage} />
-        <StyledLink to='/signup'>Create an account</StyledLink>
+        <StyledLink to="/signup">Create an account</StyledLink>
       </LoginImage>
       <FormContainer>
         <HeadingContainer>
@@ -66,7 +67,7 @@ const LoginForm = () => {
             />
           </InputContainer>
           {formik.errors.email && formik.touched.email && (
-            <p>{formik.errors.email}</p>
+            <Paragraph>{formik.errors.email}</Paragraph>
           )}
           <Label htmlFor="password">Password</Label>
           <InputContainer>
@@ -81,7 +82,7 @@ const LoginForm = () => {
             />
           </InputContainer>
           {formik.errors.password && formik.touched.password && (
-            <p>{formik.errors.password}</p>
+            <Paragraph>{formik.errors.password}</Paragraph>
           )}
           <Button type="submit" disabled={formik.isSubmitting}>
             {formik.isSubmitting ? "Logging In...." : "Log In"}

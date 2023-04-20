@@ -17,17 +17,11 @@ export const Container = styled.div`
   box-shadow: 2px 2px 15px 2px rgba(0, 0, 0, 0.2);
 
   @media only screen and (max-width: 992px) {
-    height: 80%;
+    height: 750px;
     width: 70%;
   }
 
   @media only screen and (max-width: 600px) {
-    height: 80%;
-    width: 90%;
-  }
-
-  @media only screen and (max-width: 300px) {
-    height: 70%;
     width: 90%;
   }
 `;
@@ -44,7 +38,7 @@ export const FormContainer = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    padding: 2em;
+    padding: 3em;
   }
 
   @media only screen and (max-width: 300px) {
@@ -152,4 +146,8 @@ export const Button = styled.button`
   @media only screen and (max-width: 992px) {
     margin: 1.5em auto;
   }
+`;
+
+export const Paragraph = styled.p`
+  color: red;
 `;

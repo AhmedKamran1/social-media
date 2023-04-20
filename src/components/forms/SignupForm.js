@@ -14,6 +14,7 @@ import {
   SignupImage,
   StyledLink,
   InputContainer,
+  Paragraph,
 } from "./Signup.styles";
 
 const SignupForm = () => {
@@ -61,7 +62,7 @@ const SignupForm = () => {
               error={formik.errors.email && formik.touched.email}
             />
             {formik.errors.email && formik.touched.email && (
-              <p>{formik.errors.email}</p>
+              <Paragraph>{formik.errors.email}</Paragraph>
             )}
           </InputContainer>
           <Label htmlFor="password">Password</Label>
@@ -76,7 +77,7 @@ const SignupForm = () => {
               error={formik.errors.password && formik.touched.password}
             />
             {formik.errors.password && formik.touched.password && (
-              <p>{formik.errors.password}</p>
+              <Paragraph>{formik.errors.password}</Paragraph>
             )}
           </InputContainer>
           <Label htmlFor="confirmPassword">Confirm Password</Label>
@@ -94,7 +95,7 @@ const SignupForm = () => {
             />
             {formik.errors.confirmPassword &&
               formik.touched.confirmPassword && (
-                <p>{formik.errors.confirmPassword}</p>
+                <Paragraph>{formik.errors.confirmPassword}</Paragraph>
               )}
           </InputContainer>
           <Button type="submit" disabled={formik.isSubmitting}>
