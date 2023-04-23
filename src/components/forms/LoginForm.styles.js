@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 export const Container = styled.div`
   display: flex;
@@ -24,25 +25,9 @@ export const Container = styled.div`
   @media only screen and (max-width: 600px) {
     width: 90%;
   }
-`;
 
-export const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  padding: 4em;
-
-  @media only screen and (max-width: 992px) {
-    height: 100%;
-    width: 100%;
-  }
-
-  @media only screen and (max-width: 600px) {
-    padding: 3em;
-  }
-
-  @media only screen and (max-width: 300px) {
-    padding: 1em;
+  @media only screen and (max-height: 760px) {
+    height: 650px;
   }
 `;
 
@@ -67,7 +52,7 @@ export const LoginImage = styled.div`
 
     & a {
       position: absolute;
-      top: 80%;
+      top: 75%;
       left: 50%;
       transform: translate(-50%, -50%);
     }
@@ -80,6 +65,26 @@ export const StyledLink = styled(Link)`
   top: -20%;
 `;
 
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  padding: 4em;
+
+  @media only screen and (max-width: 992px) {
+    height: 100%;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 3em;
+  }
+
+  @media only screen and (max-width: 300px) {
+    padding: 1em;
+  }
+`;
+
 export const HeadingContainer = styled.div`
   display: flex;
   justify-content: flex-start;
@@ -87,6 +92,31 @@ export const HeadingContainer = styled.div`
 
   @media only screen and (max-width: 992px) {
     justify-content: center;
+  }
+`;
+
+export const StyledToastContainer = styled(ToastContainer)`
+  @media only screen and (max-width: 992px) {
+    &&&.Toastify__toast-container {
+      width: 60%;
+      position: absolute;
+      top: 6%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    &&&.Toastify__toast-container {
+      width: 70%;
+      top: 20%;
+    }
+  }
+
+  @media only screen and (max-width: 300px) {
+    &&&.Toastify__toast-container {
+      width: 90%;
+    }
   }
 `;
 
@@ -110,7 +140,7 @@ export const Label = styled.label`
 
 export const InputContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 100%;
 `;
 
@@ -121,31 +151,26 @@ export const Input = styled.input`
   color: black;
   outline: none;
   border-style: none;
-  border-bottom: 1px solid ${({ error }) => (error ? "red" : "black")};
+  border-bottom: 1px solid ${({ error }) => (error ? "transparent" : "black")};
+  ${({ error }) => error && "box-shadow: 1px -2px 5px red;"};
 
   &:focus {
     border-color: ${({ error }) => (error ? "red" : "blue")};
   }
 `;
 
-export const EmailLogo = styled.div`
-  background: url("");
-  width: 10%;
-`;
+export const PasswordEyeLogo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: -20px;
+  width: 0;
 
-export const PasswordLogo = styled.div`
-  background: url("");
-  width: 10%;
-`;
-
-export const PasswordEyeOpenLogo = styled.div`
-  background: url("");
-  width: 10%;
-`;
-
-export const PasswordEyeCloseLogo = styled.div`
-  background: url("");
-  width: 10%;
+  & img {
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 export const Button = styled.button`
