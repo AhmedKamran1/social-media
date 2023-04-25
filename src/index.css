@@ -4,19 +4,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
   height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
 }
 
-*{
+* {
   box-sizing: border-box;
   margin: 0;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-#root{
+#root {
   height: 100%;
   width: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: lightgray;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 4px lightgray;
+  border-radius: 10px;
 }
