@@ -1,32 +1,43 @@
+import React from "react";
 import axios from "axios";
 import Wrapper from "../components/wrapper/Wrapper";
 import classes from "./UserProfile.module.css";
 import { Image } from "cloudinary-react";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../store/authSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
+
+// Break in components
+// ulti seedhi webpage pe direct krne pe  error throw  na kare
+
+const users = JSON.parse(localStorage.getItem("users"));
 
 const UserProfile = () => {
-  const users = useSelector((state) => state.authentication.users);
+  // ek user ki state for friendreqsent/recieve/isfriends
   const currentUser = useSelector((state) => state.authentication.currentUser);
   const params = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  //filtering se karna  hai ye
   const userIndex = users.findIndex((user) => user.email === params.userId);
-
+  const [viewingUser, setViewingUser] = useState(
+    users.find((user) => user.email === params.userId)
+  );
+  const [{ friendRequests, friendList }] = users.filter(
+    (user) => user.email === currentUser.email
+  );
   // checking params then analyzing if request was sent to another person
-  const friendRequestSent = users[userIndex]?.friendRequests.some(
-    (request) => request.requestRecievedFrom === currentUser.email
+  const friendRequestSent = viewingUser.friendRequests.some(
+    (request) => request === currentUser.email
   );
 
-  const friendRequestRecieved = currentUser?.friendRequests.some(
-    (request) => request.requestRecievedFrom === users[userIndex].email
+  const friendRequestRecieved = friendRequests.some(
+    (request) => request === viewingUser.email
   );
 
-  const isFriends = currentUser?.friendList.some(
-    (friend) => friend.email === params.userId
-  );
-
+  const isFriends = friendList.some((friend) => friend === params.userId);
+  //optional
   const profilePhotoHandler = async (event) => {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
@@ -44,7 +55,7 @@ const UserProfile = () => {
       })
     );
   };
-
+  //optional
   const bgPhotoHandler = async (event) => {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
@@ -59,41 +70,72 @@ const UserProfile = () => {
       authActions.profileUpdateHandler({ type: "BGPHOTO", bgPicUrl: bgPicUrl })
     );
   };
-
-  const friendRequestHandler = (event) => {
-    if (event.target.innerText === "Add Friend") {
-      dispatch(
-        authActions.friendRequestHandler({
-          type: event.target.innerText,
-          currentUser: currentUser,
-          requestSentTo: params.userId,
-        })
-      );
-    } else if (event.target.innerText === "Cancel Request") {
-      dispatch(
-        authActions.friendRequestHandler({
-          type: event.target.innerText,
-          currentUser: currentUser,
-          requestSentTo: params.userId,
-        })
-      );
-    } else if (event.target.innerText === "Accept Request") {
-      dispatch(
-        authActions.friendRequestHandler({
-          type: event.target.innerText,
-          currentUser: currentUser,
-          requestSentTo: params.userId,
-        })
-      );
-    } else if (event.target.innerText === "Decline") {
-      dispatch(
-        authActions.friendRequestHandler({
-          type: event.target.innerText,
-          currentUser: currentUser,
-          requestSentTo: params.userId,
-        })
-      );
+  // currentUser state has to  be updated   using  dispatch
+  const addFriendHandler = (event) => {
+    const friendRequestIndex = viewingUser.friendRequests.findIndex(
+      (request) => request === currentUser.email
+    );
+    if (friendRequestIndex === -1) {
+      setViewingUser((viewingUser) => ({
+        ...viewingUser,
+        friendRequests: [...viewingUser.friendRequests, currentUser.email],
+        friendList: [...viewingUser.friendList],
+      }));
+      users[userIndex].friendRequests.push(currentUser.email);
+      localStorage.setItem("users", JSON.stringify(users));
     }
+  };
+
+  const cancelRequestHandler = () => {
+    const friendReqIndex = viewingUser.friendRequests.findIndex(
+      (request) => request === currentUser.email
+    );
+    setViewingUser((viewingUser) => ({
+      ...viewingUser,
+      friendRequests: viewingUser.friendRequests.filter(
+        (request) => request !== currentUser.email
+      ),
+      friendList: [...viewingUser.friendList],
+    }));
+    users[userIndex].friendRequests.splice(friendReqIndex, 1);
+    localStorage.setItem("users", JSON.stringify(users));
+  };
+
+  //users(main array)
+  //viewing user
+  //current user{}
+
+  const acceptRequestHandler = (event) => {
+    const currentUserIndex = users.findIndex(
+      (user) => user.email === currentUser.email
+    );
+    const friendReqIndex = friendRequests.findIndex(
+      (request) => request === params.userId
+    );
+    users[currentUserIndex].friendRequests.splice(friendReqIndex, 1);
+
+    setViewingUser((viewingUser) => ({
+      ...viewingUser,
+      friendRequests: viewingUser.friendRequests.filter(
+        (request) => request !== currentUser.email
+      ),
+      friendList: [...viewingUser.friendList, params.userId],
+    }));
+    users[currentUserIndex].friendList.push(params.userId);
+    users[userIndex].friendList.push(currentUser.email);
+    localStorage.setItem("users", JSON.stringify(users));
+  };
+
+  const declineRequestHandler = () => {
+    const currentUserIndex = users.findIndex(
+      (user) => user.email === currentUser.email
+    );
+    const friendReqIndex = friendRequests.findIndex(
+      (request) => request === params.userId
+    );
+    users[currentUserIndex].friendRequests.splice(friendReqIndex, 1);
+    localStorage.setItem("users", JSON.stringify(users));
+    navigate(`/profiles/${params.userId}`);
   };
 
   return (
@@ -102,9 +144,13 @@ const UserProfile = () => {
         <Image
           className={classes.bgpic}
           cloudName="dhs1iquvc"
-          publicId={users[userIndex]?.bgPhoto}
+          publicId={
+            params.userId === currentUser.email
+              ? currentUser?.bgPhoto
+              : viewingUser?.bgPhoto
+          }
         />
-        {params.userId === currentUser.email ? (
+        {params.userId === currentUser.email && (
           <Wrapper>
             <input
               className={classes.bgfile}
@@ -113,15 +159,19 @@ const UserProfile = () => {
               onChange={bgPhotoHandler}
             />
           </Wrapper>
-        ) : null}
+        )}
       </Wrapper>
       <Wrapper className={classes.profilepiccontainer}>
         <Image
           className={classes.profilepic}
           cloudName="dhs1iquvc"
-          publicId={users[userIndex]?.profilePhoto}
+          publicId={
+            params.userId === currentUser.email
+              ? currentUser?.profilePhoto
+              : viewingUser?.profilePhoto
+          }
         />
-        {params.userId === currentUser.email ? (
+        {params.userId === currentUser.email && (
           <Wrapper>
             <input
               className={classes.profilefile}
@@ -130,31 +180,56 @@ const UserProfile = () => {
               onChange={profilePhotoHandler}
             />
           </Wrapper>
-        ) : null}
+        )}
       </Wrapper>
+      {/*check  mujtaba work for  optimize */}
       <Wrapper className={classes.infocontainer}>
-        {params.userId !== currentUser.email &&
+        {!friendRequestSent &&
+          !friendRequestRecieved &&
+          !isFriends &&
+          currentUser.email !== params.userId && (
+            <button onClick={addFriendHandler}>Add Friend</button>
+          )}
+        {friendRequestSent && (
+          <button onClick={cancelRequestHandler}>Cancel Request</button>
+        )}
+        {friendRequestRecieved && (
+          <>
+            <button onClick={acceptRequestHandler}>Accept Request</button>
+            <button onClick={declineRequestHandler}>Decline</button>
+          </>
+        )}
+        {isFriends && <button type="submit">Friends</button>}
+        {/* {params.userId !== currentUser.email &&
           !isFriends &&
           friendRequestRecieved && (
-            <button type="submit" onClick={friendRequestHandler}>
+            <button type="submit" onClick={acceptRequestHandler}>
               Accept Request
             </button>
           )}
         {params.userId !== currentUser.email &&
           !isFriends &&
           friendRequestRecieved && (
-            <button type="submit" onClick={friendRequestHandler}>
+            <button type="submit" onClick={declineRequestHandler}>
               Decline
             </button>
           )}
         {params.userId !== currentUser.email &&
           !isFriends &&
-          !friendRequestRecieved && (
-            <button type="submit" onClick={friendRequestHandler}>
-              {friendRequestSent ? "Cancel Request" : "Add Friend"}
+          !friendRequestRecieved &&
+          friendRequestSent && (
+            <button type="submit" onClick={cancelRequestHandler}>
+              Cancel Request
             </button>
           )}
-        {isFriends && <button type="submit">Friends</button>}
+        {params.userId !== currentUser.email &&
+          !isFriends &&
+          !friendRequestRecieved &&
+          !friendRequestSent && (
+            <button type="submit" onClick={addFriendHandler}>
+              Add Friend
+            </button>
+          )} */}
       </Wrapper>
     </Wrapper>
   );

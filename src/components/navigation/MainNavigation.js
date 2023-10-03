@@ -11,7 +11,7 @@ const MainNavigation = () => {
           <NavLink to="/signup">Signup Page</NavLink>
         </li>
         <li>
-          <NavLink to="/home">Home Page</NavLink>
+          <NavLink to="/">Home Page</NavLink>
         </li>
         <li>
           <NavLink to="/profiles/:userId">User Profile</NavLink>
